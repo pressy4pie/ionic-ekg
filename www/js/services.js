@@ -1,7 +1,5 @@
 angular.module('app.services', [])
 .factory('Mqtt', [function() {
-    return new MqttClient({
-         host: 'ekg.westus.cloudapp.azure.com',
-         port: 3002
-    });
+    return new Paho.MQTT.Client("ekg.westus.cloudapp.azure.com", 3002,
+        "testApp");
 }]);
