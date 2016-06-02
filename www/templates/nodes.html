@@ -1,0 +1,27 @@
+<ion-view title="Nodes" id="page2" class=" ">
+    <ion-content padding="true" class="has-header">
+        <ion-list>
+          <ion-item ng-repeat="node in nodes">
+            <div class="card list">
+                <div class="item item-divider">
+                    {{node.node_name}}
+                </div>
+                <div class="item">
+                    <ion-list>
+                        <ion-item ng-repeat="sensor in node.sensors">
+                            <div class="card list">
+                                <div class="item item-divider">
+                                    {{sensor.sensor_name}}
+                                </div>
+                                <div class="item" ng-repeat="(variable, value) in sensor.variables">
+                                    {{variable}}: <strong>{{value}}</strong>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+          </ion-item>
+        </ion-list>    
+    </ion-content>
+</ion-view>
