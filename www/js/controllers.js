@@ -26,4 +26,8 @@ angular.module('app.controllers', [])
         }
         $scope.$apply();
     };
+    
+    function do_bool(){
+        
+    }
 });

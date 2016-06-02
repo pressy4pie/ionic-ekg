@@ -14,7 +14,8 @@
                                     {{sensor.sensor_name}}
                                 </div>
                                 <div class="item" ng-repeat="(variable, value) in sensor.variables">
-                                    {{variable}}: <strong>{{value}}</strong>
+                                    {{variable}}: <strong>{{value}}</strong> <p>
+                                    <button onclick=do_bool();> On</button>
                                 </div>
                             </div>
                         </ion-item>
