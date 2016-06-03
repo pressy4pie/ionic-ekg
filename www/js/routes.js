@@ -7,9 +7,6 @@ angular.module('app.routes', [])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
-
   .state('eKG.nodes', {
     url: '/nodes',
     views: {
@@ -18,6 +15,11 @@ angular.module('app.routes', [])
         controller: 'nodesCtrl'
       }
     }
+  })
+  
+  .state('eKG.nodesInfo',{
+    url: '/nodes/{node_id}',
+    templateUrl: 'templates/nodeInfo.html'
   })
 
   .state('eKG.alarms', {
@@ -47,7 +49,4 @@ angular.module('app.routes', [])
   })
 
 $urlRouterProvider.otherwise('/home/nodes')
-
-  
-
 });

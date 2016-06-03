@@ -4,12 +4,14 @@
           <ion-item ng-repeat="node in nodes">
             <div class="card list">
                 <div class="bar bar-header">
-                    <h2 class='title'> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong>  
+                    <h2 class='title'>  
                     <Strong>{{node.display_name.toUpperCase()}}</Strong></h2>
-                    <button class="button icon ion-gear-a "> Edit</button>
+                    <button href="/nodes/{{node._id}}" class="button icon ion-gear-a "> Edit</button>
                 </div>
                 <div class="item">
                     <br><br>
+                    
+                    <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <br>
                     <strong> DEVICE: </strong> {{node.node_name}} <br>
                     <strong> BATTERY LEVEL:  </strong> {{node.bat_level}}%<br>
                     <strong> LAST SEEN : </strong> {{ get_date(node.last_seen) }}
@@ -22,7 +24,7 @@
                                 </div>
                                 <div class="item" ng-repeat="(variable, value) in sensor.variables">
                                     <!-- This shows a button according to what type of sensor it is. -->
-                                    <button class="button button-dark button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
+                                    <button class="button button-full {{get_boolean_button_color(value)}} button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
                                         ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
                                         {{ vartype_toString( variable, value ); }}
                                     </button>

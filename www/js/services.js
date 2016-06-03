@@ -18,7 +18,7 @@ angular.module('app.services', [])
         console.log('connection lost - trying to reconnect.');
         // Try to reconnect. 
         // This should probably be in a set_timeout type thing butfukit.
-        Mqtt_service.connect(mqtt_options);
+        //Mqtt_service.connect(mqtt_options);
     };
     
     // Do the connect. 

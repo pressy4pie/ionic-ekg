@@ -9,6 +9,14 @@ angular.module('app.controllers', [])
         $scope.$apply();
     };
     
+    $scope.get_boolean_button_color = function(value){
+        if(parseInt(value) == 1){
+            return 'button-balanced';
+        }else{
+            return 'button-dark';
+        }
+    }
+    
     $scope.update_boolean_sensor_var = function(nodeid,sensorid,vartype,value){
         var msg = {'node_id': nodeid, 'sensor_id' : sensorid, 'displpayloadayName': value, 'msg_cmd': 1, 'msg_type' :vartype };
         message = new Paho.MQTT.Message( JSON.stringify(msg) ) ;
@@ -28,19 +36,10 @@ angular.module('app.controllers', [])
     $scope.vartype_toString = function(var_type, value){
         switch(parseInt(var_type)){
             case 29:
-                if(parseInt(value) == 1){
-                    return 'UP *'
-                }
                 return 'UP  ';
             case 30:
-                if(parseInt(value) == 1){
-                    return 'DOWN *'
-                }
                 return 'DOWN  ';
             case 31: 
-                if(parseInt(value) == 1){
-                    return 'STOP *'
-                }
                 return 'STOP  ';
             default:
                 return 'UNSORTED OR UNKNOWN';
