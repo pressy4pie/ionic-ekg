@@ -1,10 +1,10 @@
-<ion-view title="Nodes" id="page2" class=" ">
-    <ion-content padding="true" class="has-header">
+<ion-view title="Nodes" id="page2" class=" " style="background-color: grey;" >
+    <ion-content padding="true" class="has-header" >
         <ion-list>
           <ion-item ng-repeat="node in nodes">
-            <div class="card list">
+            <div class="card list" >
                 <div class="item item-divider">
-                    <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <Strong><h1>{{node.node_name}}</h1></Strong> {{node.display_name}}
+                    <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <Strong>{{node.node_name}}</Strong><br> {{node.display_name}}
                 </div>
                 <div class="item">
                     <strong> BATTERY LEVEL:  </strong> {{node.bat_level}}%<br>
@@ -18,14 +18,15 @@
                                 </div>
                                 <div class="item" ng-repeat="(variable, value) in sensor.variables">
                                     <!-- This shows a button according to what type of sensor it is. -->
-                                    <button ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" 
-                                        ' ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
+                                    <button ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
+                                        ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
                                         {{ vartype_toString( variable, value ); }}
                                     </button>
                                     <button ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary" 
                                         ' ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
                                         {{ boolean_toString( value ); }}
                                     </button>
+                                    {{ parse_var_and_value(variable, value) }}
                                     <!--{{ vartype_toString( variable ); }}  : <strong>{{value}}</strong> -->
                                 </div>
                             </div>

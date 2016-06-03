@@ -73,6 +73,19 @@ angular.module('app.controllers', [])
             return 'NODE NOT RESPONDING';
         }
     }
+    
+    $scope.parse_var_and_value = function(variable, value){
+        switch(parseInt(variable)){
+            case 0:
+                return value + " Degrees";
+            case 1:
+                return value + "%";
+            case 37: 
+                return value + " Lumins";
+            
+        }
+    }
+    
 })
 .controller('alarmsCtrl', function($scope, Mqtt) {
     initmessage = new Paho.MQTT.Message("get");
