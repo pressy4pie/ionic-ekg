@@ -10,7 +10,7 @@ angular.module('app.routes', [])
     
   
 
-      .state('eKG.nodes', {
+  .state('eKG.nodes', {
     url: '/nodes',
     views: {
       'tab1': {
