@@ -4,9 +4,12 @@
           <ion-item ng-repeat="node in nodes">
             <div class="card list">
                 <div class="item item-divider">
-                    {{node.node_name}}
+                    <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <Strong><h1>{{node.node_name}}</h1></Strong> {{node.display_name}}
                 </div>
                 <div class="item">
+                    <strong> BATTERY LEVEL:  </strong> {{node.bat_level}}%<br>
+                    <strong> LAST SEEN : </strong> {{ get_date(node.last_seen) }}
+                    
                     <ion-list>
                         <ion-item ng-repeat="sensor in node.sensors">
                             <div class="card list">
@@ -14,8 +17,16 @@
                                     {{sensor.sensor_name}}
                                 </div>
                                 <div class="item" ng-repeat="(variable, value) in sensor.variables">
-                                    {{variable}}: <strong>{{value}}</strong> <p>
-                                    <button onclick=do_bool();> On</button>
+                                    <!-- This shows a button according to what type of sensor it is. -->
+                                    <button ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" 
+                                        ' ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
+                                        {{ vartype_toString( variable, value ); }}
+                                    </button>
+                                    <button ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary" 
+                                        ' ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
+                                        {{ boolean_toString( value ); }}
+                                    </button>
+                                    <!--{{ vartype_toString( variable ); }}  : <strong>{{value}}</strong> -->
                                 </div>
                             </div>
                         </ion-item>
