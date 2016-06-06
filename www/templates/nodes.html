@@ -1,6 +1,12 @@
-<ion-view title="Nodes" id="page2" class=" " style="background-color: grey;" >
-    <ion-content padding="true" class="has-header" >
+<ion-view title="Manual Control" id="page2" class=" " style="background-color: grey;" >
+    <ion-content padding="false" class="has-header" >
         <ion-list>
+            <div class="button-bar" style="background-color: white;" >
+                <button ng-click="force_inclusion_mode();" class="button button-small {{get_current_inclusion_mode().button_color;}}">{{ get_current_inclusion_mode().button_text; }}</button>
+                <button ng-click="$scope.apply();" class="button button-small button-dark">Get Nodes</button>
+                <button class="button button-small button-dark">Do somehting</button>
+            </div>
+            
           <ion-item ng-repeat="node in nodes">
             <div class="card list">
                 <div class="bar bar-header">

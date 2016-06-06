@@ -1,6 +1,7 @@
 angular.module('app.services', [])
 .factory('Mqtt', [function() {
-    var Mqtt_service = new Paho.MQTT.Client("ekg.westus.cloudapp.azure.com", 3002,"testApp");
+    var random_string_id_thing = Math.floor(Math.random() * (1000 - 0 + 1)) + 1000;
+    var Mqtt_service = new Paho.MQTT.Client("ekg.westus.cloudapp.azure.com", 3002,random_string_id_thing.toString()  );
     
     var mqtt_options = {
         timeout: 3,
@@ -18,7 +19,7 @@ angular.module('app.services', [])
         console.log('connection lost - trying to reconnect.');
         // Try to reconnect. 
         // This should probably be in a set_timeout type thing butfukit.
-        //Mqtt_service.connect(mqtt_options);
+        Mqtt_service.connect(mqtt_options);
     };
     
     // Do the connect. 

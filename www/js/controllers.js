@@ -6,7 +6,37 @@ angular.module('app.controllers', [])
             if (!$scope.nodes) { $scope.nodes = []}
             $scope.nodes[node._id-1] = node;
         }
+        else if (payload.destinationName == "/zc/test_serial/current_inclusion_mode/"){
+            if(payload.payloadString == 'off'){
+                $scope.inclusionmode = false;
+            }else if(payload.payloadString == 'on'){
+                $scope.inclusionmode = true;
+            }
+        }
+        //Something changed, apply.
         $scope.$apply();
+    };
+    
+    $scope.force_inclusion_mode = function(){
+        var msg = 'set';
+        var message = new Paho.MQTT.Message( msg ) ;
+        message.destinationName = '/zc/' + "test_serial" + "/set_inclusion_mode/";
+        Mqtt.send(message);
+    };
+    
+    $scope.get_current_inclusion_mode = function(){
+        if($scope.inclusionmode == true) {
+            //Make the button green when inclusion mode is enabled.
+            var button = 'button-balanced';
+            var button_text = 'Including';            
+        } else {
+            var button =  'button-dark';
+            var button_text = 'Inclusion Mode';
+        }
+        return {
+            button_color : button,
+            button_text : button_text
+        };
     };
        
     $scope.get_boolean_button_color = function(value){
