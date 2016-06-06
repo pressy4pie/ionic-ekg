@@ -24,6 +24,13 @@ angular.module('app.controllers', [])
         Mqtt.send(message);
     };
     
+    $scope.reboot_node = function(node_id){
+        var msg = {'node_id': node_id};
+        message = new Paho.MQTT.Message( JSON.stringify(msg) ) ;
+        message.destinationName = "/zc/test_serial/reboot_node/";
+        Mqtt.send(message);
+  }
+    
     $scope.get_current_inclusion_mode = function(){
         if($scope.inclusionmode == true) {
             //Make the button green when inclusion mode is enabled.
