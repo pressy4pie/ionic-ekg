@@ -9,16 +9,48 @@
             
           <ion-item ng-repeat="node in nodes">
             <div class="card list">
-                <span ng-hide="node.eased == true"> <strong> <font color='red'> NO NODES! </font></strong></span>
-                <div ng-hide="node.erased == true" class="bar bar-header">
+                <div class="bar bar-header bar-balanced">
                     <h2 class='title'>  
                     <Strong>{{node.display_name.toUpperCase()}}</Strong></h2>
-                    <button ng-href="/nodes/{{node._id}}" class="button icon ion-gear-a "> Edit</button>
-                    <!-- battery powered sensors can't reboot -->
-                    <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot Node</button>
                 </div>
-                <div ng-hide="node.erased == true" class="item">
-                    <br><br> <!-- This has to be here for some reason. -->
+                
+                <div class="item">
+                    <span ng-hide='node_info._id == true'> <br><br> </span><!-- This has to be here for some reason. -->
+                    <div class="button-bar" style="background-color: white;" >
+                        <button ng-click="handle_node_folding(node._id);" class="button icon ion-arrow-shrink "> Fold</button>
+                        <button ng-click="handle_node_info(node._id);" class="button icon ion-gear-a "> Edit</button>
+                        <!-- battery powered sensors can't reboot -->
+                        <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot</button>
+               
+                </div>    
+                        <!-- Edit values box -->
+                        <div ng-hide='node_info[node._id] != true ' class="item">
+                            <br>
+                            <div class="list">
+                                <div class="item item-input-inset">
+                                    <!-- Update Display Name -->
+                                    <label class="item-input-wrapper">
+                                        <input ng-model="nodes.display_name" type="text" id="display_input_box" name="display_input_box" placeholder="{{node.display_name}}">
+                                    </label>
+                                    <button ng-click="update_node_display_name({{node._id}},nodes.display_name);" class="button button-small">
+                                    Update Display Name
+                                    </button>
+                                </div>
+                                
+                                <div class="item item-input-inset">
+                                    <!-- Update Node Dead Milis -->
+                                    <label class="item-input-wrapper">
+                                        <input ng-model="nodes.hb_freq" type="number" id="display_input_box" name="display_input_box" placeholder="{{node.hb_freq}}">
+                                    </label>
+                                    <button ng-click="update_node_hb_freq({{node._id}},nodes.hb_freq);" class="button button-small">
+                                    Update Time Until Dead
+                                    </button>   
+                                                            
+                                </div>
+                            </div>                    
+                    </div>
+                    <br>
+                    <div ng-hide="node_folded[node._id] == true || node_info[node._id] == true ">
                     <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> </span>
                     <strong> DEVICE: </strong> {{node.node_name}}
                     <span ng-hide="node.bat_powered == false"> <strong> <br> BATTERY LEVEL:  </strong>  {{node.bat_level}} % </span>
@@ -27,13 +59,16 @@
                     <span> <strong> <br> LIB VERSION : </strong> {{node.lib_version}} </span>
                     <span ng-hide='node.current_status == "ok"' > <strong> <br> CURRENT STATUS:</strong> {{node.current_status}} </span>
                     <span ng-hide='node.sensors.length > 0'> <strong> <font color='red'> <br>NO SENSORS ON THIS NODE </font> </strong> </span>
+                    
                     <ion-list>
                         <ion-item ng-repeat="sensor in node.sensors">
                             <div class="card list">
-                                <div class="item item-divider">
+                                <div ng-hide="node_folded[node._id] == true" class="item item-divider">
                                     {{sensor.sensor_name}} : {{sensor.sensor_display_name.toUpperCase()}}
                                 </div>
-                                <div class="item" ng-repeat="(variable, value) in sensor.variables">
+                                
+                                <!-- Variable list -->
+                                <div ng-hide="node_folded[node._id] == true" class="item" ng-repeat="(variable, value) in sensor.variables">
                                     
                                     <!-- Motor Controller (cover) -->
                                     <button class="button button-full {{get_boolean_button_color(value)}} button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
@@ -48,9 +83,12 @@
                                     <!-- This displays the text in the box, button, switch, etc. --> 
                                     <strong> {{ parse_var_and_value(variable, value) }} </strong>
                                 </div>
+                                
                             </div>
                         </ion-item>
                     </ion-list>
+                    
+                    </div>
                 </div>
             </div>
           </ion-item>

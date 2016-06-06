@@ -16,11 +16,6 @@ angular.module('app.routes', [])
       }
     }
   })
-  
-  .state('eKG.nodesInfo',{
-    url: '/nodes/{node_id}',
-    templateUrl: 'templates/nodeInfo.html'
-  })
 
   .state('eKG.alarms', {
     url: '/alarms',

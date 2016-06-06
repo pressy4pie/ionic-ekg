@@ -17,12 +17,48 @@ angular.module('app.controllers', [])
         $scope.$apply();
     };
     
+    $scope.node_info={};
+    $scope.node_folded={};
+    $scope.handle_node_info = function(node_id){
+        if($scope.node_info[node_id] == null){ $scope.node_info[node_id] = false; }
+        if($scope.node_info[node_id] == true){
+            $scope.node_info[node_id] = false;
+        }else if( $scope.node_info[node_id] == false ){
+            $scope.node_info[node_id] = true;
+        }       
+    };
+    
+    $scope.handle_node_folding = function(node_id){
+        if($scope.node_folded[node_id] == null){ $scope.node_folded[node_id] = false; }
+        if($scope.node_folded[node_id] == true){
+            $scope.node_folded[node_id] = false;
+        }else if( $scope.node_folded[node_id] == false ){
+            $scope.node_folded[node_id] = true;
+        }       
+    };
+    
     $scope.force_inclusion_mode = function(){
         var msg = 'set';
         var message = new Paho.MQTT.Message( msg ) ;
         message.destinationName = '/zc/' + "test_serial" + "/set_inclusion_mode/";
         Mqtt.send(message);
     };
+    
+    $scope.update_node_display_name = function(node_id, display_name) {
+        if(display_name != null ){
+            var msg = {'node_id': node_id, 'diaplayName': display_name };
+            message = new Paho.MQTT.Message( JSON.stringify(msg) ) ;
+            message.destinationName = "/zc/test_serial/update_node_display_name/";
+            Mqtt.send(message);
+            $scope.reboot_node(node_id);
+        }
+    };
+    
+    $scope.update_node_hb_freq = function(node_id, hb_freq) {
+        if(hb_freq != null){
+            
+        }
+    }
     
     $scope.reboot_node = function(node_id){
         var msg = {'node_id': node_id};
