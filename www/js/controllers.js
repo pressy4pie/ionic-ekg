@@ -1,5 +1,5 @@
 angular.module('app.controllers', [])
-.controller('nodesCtrl', function($scope, Mqtt) {     
+.controller('nodesCtrl', function($scope, Mqtt) {  
     Mqtt.onMessageArrived = function(payload) {
         if (payload.destinationName == "/zc/test_serial/node/" && payload.payloadString != "done") {
             node = JSON.parse(payload.payloadString);
@@ -8,17 +8,25 @@ angular.module('app.controllers', [])
         }
         $scope.$apply();
     };
-    
+       
     $scope.get_boolean_button_color = function(value){
         if(parseInt(value) == 1){
             return 'button-balanced';
         }else{
             return 'button-dark';
         }
-    }
+    };
+    
+    $scope.invert_boolean_value = function(value){
+        if(parseInt(value) == 1){
+            return 0;
+        } else if(parseInt(value) == 0) {
+            return 1;
+        }
+    };
     
     $scope.update_boolean_sensor_var = function(nodeid,sensorid,vartype,value){
-        var msg = {'node_id': nodeid, 'sensor_id' : sensorid, 'displpayloadayName': value, 'msg_cmd': 1, 'msg_type' :vartype };
+        var msg = {'node_id': nodeid, 'sensor_id' : sensorid, 'payload': value, 'msg_cmd': 1, 'msg_type' :vartype };
         message = new Paho.MQTT.Message( JSON.stringify(msg) ) ;
         message.destinationName = "/zc/test_serial/update_sensor_variable/";
         Mqtt.send(message);
@@ -36,13 +44,15 @@ angular.module('app.controllers', [])
     $scope.vartype_toString = function(var_type, value){
         switch(parseInt(var_type)){
             case 29:
-                return 'UP  ';
+                return 'MOTORS UP  ';
             case 30:
-                return 'DOWN  ';
+                return 'MOTORS DOWN  ';
             case 31: 
-                return 'STOP  ';
+                return 'STOP MOTORS  ';
+            case 2: 
+                return 'SMART SWITCH'
             default:
-                return 'UNSORTED OR UNKNOWN';
+                return 'UNSORTED OR UNKNOWN ' + var_type;
         }
     }; 
     
@@ -86,6 +96,8 @@ angular.module('app.controllers', [])
     }
     
 })
+
+/** ALARMS */
 .controller('alarmsCtrl', function($scope, Mqtt) {
     initmessage = new Paho.MQTT.Message("get");
             initmessage.destinationName = "/zc/test_serial/get_alarms/";
@@ -93,7 +105,7 @@ angular.module('app.controllers', [])
     Mqtt.onMessageArrived = function(payload) {
         if (payload.destinationName == "/zc/test_serial/alarm/" && payload.payloadString != "done") {
             alarm = JSON.parse(payload.payloadString);
-            if (!$scope.alarms) { $scope.alarms = []}
+            if (!$scope.alarms) { $scope.alarms = [] }
             $scope.alarms[alarm._id-1] = alarm;
         }
         $scope.$apply();

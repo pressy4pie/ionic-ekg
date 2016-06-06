@@ -11,11 +11,11 @@
                 <div class="item">
                     <br><br>
                     
-                    <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <br>
+                    <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <br> <span>
                     <strong> DEVICE: </strong> {{node.node_name}} <br>
-                    <strong> BATTERY LEVEL:  </strong> {{node.bat_level}}%<br>
+                    <strong> BATTERY LEVEL:  </strong>  {{node.bat_level}} % <br>
                     <strong> LAST SEEN : </strong> {{ get_date(node.last_seen) }}
-                    
+                    <span ng-hide='node.sensors.length > 0'> <strong> <font color='red'> <br>NO SENSORS ON THIS NODE </font> </strong> </span>
                     <ion-list>
                         <ion-item ng-repeat="sensor in node.sensors">
                             <div class="card list">
@@ -23,17 +23,19 @@
                                     {{sensor.sensor_name}} : {{sensor.sensor_display_name.toUpperCase()}}
                                 </div>
                                 <div class="item" ng-repeat="(variable, value) in sensor.variables">
-                                    <!-- This shows a button according to what type of sensor it is. -->
+                                    
+                                    <!-- Motor Controller (cover) -->
                                     <button class="button button-full {{get_boolean_button_color(value)}} button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
                                         ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
                                         {{ vartype_toString( variable, value ); }}
                                     </button>
-                                    <button  class="button button-dark" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary" 
-                                        ' ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
-                                        {{ boolean_toString( value ); }}
-                                    </button>
-                                    {{ parse_var_and_value(variable, value) }}
-                                    <!--{{ vartype_toString( variable ); }}  : <strong>{{value}}</strong> -->
+                                    
+                                    <!-- Smart Switch -->
+                                    <ion-toggle ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary"' 
+                                    toggle-class="toggle-ballanced">{{ vartype_toString( variable, value ); }}</ion-toggle>
+
+                                    <!-- This displays the text in the box, button, switch, etc. --> 
+                                    <strong> {{ parse_var_and_value(variable, value) }} </strong>
                                 </div>
                             </div>
                         </ion-item>
