@@ -13,8 +13,9 @@
                 <div ng-hide="node.erased == true" class="bar bar-header">
                     <h2 class='title'>  
                     <Strong>{{node.display_name.toUpperCase()}}</Strong></h2>
-                    <button href="/nodes/{{node._id}}" class="button icon ion-gear-a "> Edit</button>
-                    <button ng-disabled="node.node_name=='EKG-SENSORSTICK' " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot Node</button>
+                    <button ng-href="/nodes/{{node._id}}" class="button icon ion-gear-a "> Edit</button>
+                    <!-- battery powered sensors can't reboot -->
+                    <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot Node</button>
                 </div>
                 <div ng-hide="node.erased == true" class="item">
                     <br><br> <!-- This has to be here for some reason. -->
