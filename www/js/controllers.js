@@ -183,4 +183,22 @@ angular.module('app.controllers', [])
         }
         $scope.$apply();
     };
+})
+
+.controller('timersCtrl',function($scope,Mqtt){
+    initmessage = new Paho.MQTT.Message("get");
+            initmessage.destinationName = "/zc/test_serial/get_timers/";
+            Mqtt.send(initmessage); 
+    Mqtt.onMessageArrived = function(payload) {
+        if (payload.destinationName == "/zc/test_serial/timer/" && payload.payloadString != "done") {
+            timer = JSON.parse(payload.payloadString);
+            if (!$scope.timers) { $scope.timers = [] }
+            $scope.timers[timer._id-1] = timer;
+        }
+        $scope.$apply();
+    };    
+})
+
+.controller('weatherCtrl', function($scope){
+    
 });

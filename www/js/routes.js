@@ -37,6 +37,16 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('eKG.weather', {
+    url: '/weather',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/weather.html',
+        controller: 'weatherCtrl'
+      }
+    }
+  })
+
   .state('eKG', {
     url: '/home',
     templateUrl: 'templates/eKG.html',

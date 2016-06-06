@@ -1,97 +1,86 @@
 <ion-view title="Manual Control" id="page2" class=" " style="background-color: grey;" >
-    <ion-content padding="false" class="has-header" >
-        <ion-list>
-            <div class="button-bar" style="background-color: white;" >
-                <button ng-click="force_inclusion_mode();" class="button button-small {{get_current_inclusion_mode().button_color;}}">{{ get_current_inclusion_mode().button_text; }}</button>
-                <button ng-click="$scope.apply();" class="button button-small button-dark">Get Nodes</button>
-                <button class="button button-small button-dark">Do somehting</button>
-            </div>
-            
-          <ion-item ng-repeat="node in nodes">
+   <ion-content padding="false" class="has-header" >
+      <ion-list>
+         <div class="button-bar" style="background-color: white;" >
+            <button ng-click="force_inclusion_mode();" class="button button-small {{get_current_inclusion_mode().button_color;}}">{{ get_current_inclusion_mode().button_text; }}</button>
+            <button ng-click="$scope.apply();" class="button button-small button-dark">Get Nodes</button>
+            <button class="button button-small button-dark">Do somehting</button>
+         </div>
+         <ion-item ng-repeat="node in nodes">
             <div class="card list">
-                <div class="bar bar-header bar-balanced">
-                    <h2 class='title'>  
-                    <Strong>{{node.display_name.toUpperCase()}}</Strong></h2>
-                </div>
-                
-                <div class="item">
-                    <span ng-hide='node_info._id == true'> <br><br> </span><!-- This has to be here for some reason. -->
-                    <div class="button-bar" style="background-color: white;" >
-                        <button ng-click="handle_node_folding(node._id);" class="button icon ion-arrow-shrink "> Fold</button>
-                        <button ng-click="handle_node_info(node._id);" class="button icon ion-gear-a "> Edit</button>
-                        <!-- battery powered sensors can't reboot -->
-                        <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot</button>
-               
-                </div>    
-                        <!-- Edit values box -->
-                        <div ng-hide='node_info[node._id] != true ' class="item">
-                            <br>
-                            <div class="list">
-                                <div class="item item-input-inset">
-                                    <!-- Update Display Name -->
-                                    <label class="item-input-wrapper">
-                                        <input ng-model="nodes.display_name" type="text" id="display_input_box" name="display_input_box" placeholder="{{node.display_name}}">
-                                    </label>
-                                    <button ng-click="update_node_display_name({{node._id}},nodes.display_name);" class="button button-small">
-                                    Update Display Name
-                                    </button>
-                                </div>
-                                
-                                <div class="item item-input-inset">
-                                    <!-- Update Node Dead Milis -->
-                                    <label class="item-input-wrapper">
-                                        <input ng-model="nodes.hb_freq" type="number" id="display_input_box" name="display_input_box" placeholder="{{node.hb_freq}}">
-                                    </label>
-                                    <button ng-click="update_node_hb_freq({{node._id}},nodes.hb_freq);" class="button button-small">
-                                    Update Time Until Dead
-                                    </button>   
-                                                            
-                                </div>
-                            </div>                    
-                    </div>
-                    <br>
-                    <div ng-hide="node_folded[node._id] == true || node_info[node._id] == true ">
-                    <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> </span>
-                    <strong> DEVICE: </strong> {{node.node_name}}
-                    <span ng-hide="node.bat_powered == false"> <strong> <br> BATTERY LEVEL:  </strong>  {{node.bat_level}} % </span>
-                    <span> <strong> <br> LAST SEEN : </strong> {{ get_date(node.last_seen) }}  </span>
-                    <span> <strong> <br> VERSION : </strong> {{node.node_version}} </span>
-                    <span> <strong> <br> LIB VERSION : </strong> {{node.lib_version}} </span>
-                    <span ng-hide='node.current_status == "ok"' > <strong> <br> CURRENT STATUS:</strong> {{node.current_status}} </span>
-                    <span ng-hide='node.sensors.length > 0'> <strong> <font color='red'> <br>NO SENSORS ON THIS NODE </font> </strong> </span>
-                    
-                    <ion-list>
+               <div class="bar bar-header bar-balanced">
+                  <h2 class='title'>  
+                     <Strong>{{node.display_name.toUpperCase()}}</Strong>
+                  </h2>
+               </div>
+               <div class="item">
+                  <span ng-hide='node_info._id == true'> <br><br> </span><!-- This has to be here for some reason. -->
+                  <div class="button-bar" style="background-color: white;" >
+                     <button ng-click="handle_node_folding(node._id);" class="button icon ion-arrow-shrink "> Fold</button>
+                     <button ng-click="handle_node_info(node._id);" class="button icon ion-gear-a "> Edit</button>
+                     <!-- battery powered sensors can't reboot -->
+                     <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot</button>
+                  </div>
+                  <!-- Edit values box -->
+                  <div ng-hide='node_info[node._id] != true ' class="item">
+                     <br>
+                     <div class="list">
+                        <div class="item item-input-inset">
+                           <!-- Update Display Name -->
+                           <label class="item-input-wrapper">
+                           <input ng-model="nodes.display_name" type="text" id="display_input_box" name="display_input_box" placeholder="{{node.display_name}}">
+                           </label>
+                           <button ng-click="update_node_display_name({{node._id}},nodes.display_name);" class="button button-small">
+                           Update Display Name
+                           </button>
+                        </div>
+                        <div class="item item-input-inset">
+                           <!-- Update Node Dead Milis -->
+                           <label class="item-input-wrapper">
+                           <input ng-model="nodes.hb_freq" type="number" id="display_input_box" name="display_input_box" placeholder="{{node.hb_freq}}">
+                           </label>
+                           <button ng-click="update_node_hb_freq({{node._id}},nodes.hb_freq);" class="button button-small">
+                           Update Time Until Dead
+                           </button>   
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <div ng-hide="node_folded[node._id] == true || node_info[node._id] == true ">
+                     <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> </span>
+                     <strong> DEVICE: </strong> {{node.node_name}}
+                     <span ng-hide="node.bat_powered == false"> <strong> <br> BATTERY LEVEL:  </strong>  {{node.bat_level}} % </span>
+                     <span> <strong> <br> LAST SEEN : </strong> {{ get_date(node.last_seen) }}  </span>
+                     <span> <strong> <br> VERSION : </strong> {{node.node_version}} </span>
+                     <span> <strong> <br> LIB VERSION : </strong> {{node.lib_version}} </span>
+                     <span ng-hide='node.current_status == "ok"' > <strong> <br> CURRENT STATUS:</strong> {{node.current_status}} </span>
+                     <span ng-hide='node.sensors.length > 0'> <strong> <font color='red'> <br>NO SENSORS ON THIS NODE </font> </strong> </span>
+                     <ion-list>
                         <ion-item ng-repeat="sensor in node.sensors">
-                            <div class="card list">
-                                <div ng-hide="node_folded[node._id] == true" class="item item-divider">
-                                    {{sensor.sensor_name}} : {{sensor.sensor_display_name.toUpperCase()}}
-                                </div>
-                                
-                                <!-- Variable list -->
-                                <div ng-hide="node_folded[node._id] == true" class="item" ng-repeat="(variable, value) in sensor.variables">
-                                    
-                                    <!-- Motor Controller (cover) -->
-                                    <button class="button button-full {{get_boolean_button_color(value)}} button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
-                                        ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
-                                        {{ vartype_toString( variable, value ); }}
-                                    </button>
-                                    
-                                    <!-- Smart Switch -->
-                                    <ion-toggle ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary"' 
+                           <div class="card list">
+                              <div ng-hide="node_folded[node._id] == true" class="item item-divider">
+                                 {{sensor.sensor_name}} : {{sensor.sensor_display_name.toUpperCase()}}
+                              </div>
+                              <!-- Variable list -->
+                              <div ng-hide="node_folded[node._id] == true" class="item" ng-repeat="(variable, value) in sensor.variables">
+                                 <!-- Motor Controller (cover) -->
+                                 <button class="button button-full {{get_boolean_button_color(value)}} button-large" ng-hide='check_sensor_type({{sensor.sensor_type}}) != "cover" '
+                                    ng-click='update_boolean_sensor_var( {{node._id}}, {{sensor.sensor_id}}, {{variable}}, 1 );'> 
+                                 {{ vartype_toString( variable, value ); }}
+                                 </button>
+                                 <!-- Smart Switch -->
+                                 <ion-toggle ng-hide='check_sensor_type({{sensor.sensor_type}}) != "binary"' 
                                     toggle-class="toggle-ballanced">{{ vartype_toString( variable, value ); }}</ion-toggle>
-
-                                    <!-- This displays the text in the box, button, switch, etc. --> 
-                                    <strong> {{ parse_var_and_value(variable, value) }} </strong>
-                                </div>
-                                
-                            </div>
+                                 <!-- This displays the text in the box, button, switch, etc. --> 
+                                 <strong> {{ parse_var_and_value(variable, value) }} </strong>
+                              </div>
+                           </div>
                         </ion-item>
-                    </ion-list>
-                    
-                    </div>
-                </div>
+                     </ion-list>
+                  </div>
+               </div>
             </div>
-          </ion-item>
-        </ion-list>    
-    </ion-content>
+         </ion-item>
+      </ion-list>
+   </ion-content>
 </ion-view>
