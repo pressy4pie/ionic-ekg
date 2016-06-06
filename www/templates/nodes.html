@@ -9,20 +9,22 @@
             
           <ion-item ng-repeat="node in nodes">
             <div class="card list">
-                <div class="bar bar-header">
+                <span ng-hide="node.eased == true"> <strong> <font color='red'> NO NODES! </font></strong></span>
+                <div ng-hide="node.erased == true" class="bar bar-header">
                     <h2 class='title'>  
                     <Strong>{{node.display_name.toUpperCase()}}</Strong></h2>
                     <button href="/nodes/{{node._id}}" class="button icon ion-gear-a "> Edit</button>
                     <button ng-disabled="node.node_name=='EKG-SENSORSTICK' " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot Node</button>
                 </div>
-                <div class="item">
-                    <br><br>
-                    
-                    <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> <br> </span>
-                    <strong> DEVICE: </strong> {{node.node_name}} <br>
-                    <strong> BATTERY LEVEL:  </strong>  {{node.bat_level}} % <br>
-                    <span> <strong> LAST SEEN : </strong> {{ get_date(node.last_seen) }}  </span>
-                    <span ng-hide='node.current_status == null' > <strong> <br> CURRENT STATUS:</strong> {{node.current_status}} </span>
+                <div ng-hide="node.erased == true" class="item">
+                    <br><br> <!-- This has to be here for some reason. -->
+                    <span> <strong> <font color='red'> {{get_node_alive_status(node.alive)}} </font> </strong> </span>
+                    <strong> DEVICE: </strong> {{node.node_name}}
+                    <span ng-hide="node.bat_powered == false"> <strong> <br> BATTERY LEVEL:  </strong>  {{node.bat_level}} % </span>
+                    <span> <strong> <br> LAST SEEN : </strong> {{ get_date(node.last_seen) }}  </span>
+                    <span> <strong> <br> VERSION : </strong> {{node.node_version}} </span>
+                    <span> <strong> <br> LIB VERSION : </strong> {{node.lib_version}} </span>
+                    <span ng-hide='node.current_status == "ok"' > <strong> <br> CURRENT STATUS:</strong> {{node.current_status}} </span>
                     <span ng-hide='node.sensors.length > 0'> <strong> <font color='red'> <br>NO SENSORS ON THIS NODE </font> </strong> </span>
                     <ion-list>
                         <ion-item ng-repeat="sensor in node.sensors">
