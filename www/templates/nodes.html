@@ -3,17 +3,16 @@
       <ion-list>
          <div class="button-bar" style="background-color: white;" >
             <button ng-click="force_inclusion_mode();" class="button button-small {{get_current_inclusion_mode().button_color;}}">{{ get_current_inclusion_mode().button_text; }}</button>
-            <button ng-click="$scope.apply();" class="button button-small button-dark">Get Nodes</button>
-            <button class="button button-small button-dark">Do somehting</button>
          </div>
          <!-- displays a card for every node in the nodes array -->
          <ion-item ng-repeat="node in nodes">
             <div class="card list">
-               <div class="bar bar-header bar-balanced">
+               <div class="bar bar-header {{handle_node_alive(node.alive,node._id)}}">
                   <h2 class='title'>  
                      <Strong>{{node.display_name.toUpperCase()}}</Strong>
                   </h2>
                </div>
+               
                <div class="item">
                   <span ng-hide='node_info._id == true'> <br><br> </span><!-- This has to be here for some reason. -->
                   <div class="button-bar" style="background-color: white;" >
@@ -22,6 +21,7 @@
                      <!-- battery powered sensors can't reboot -->
                      <button ng-disabled="node.bat_powered == true " ng-click="reboot_node({{node._id}})" class="button icon ion-power "> Reboot</button>
                   </div>
+                  
                   <!-- Edit values box -->
                   <div ng-hide='node_info[node._id] != true ' class="item">
                      <br>
