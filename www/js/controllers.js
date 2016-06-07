@@ -1,22 +1,5 @@
 angular.module('app.controllers', [])
 .controller('nodesCtrl', function($scope, Mqtt) {  
-    Mqtt.onMessageArrived = function(payload) {
-        if (payload.destinationName == "/zc/test_serial/node/" && payload.payloadString != "done") {
-            node = JSON.parse(payload.payloadString);
-            if (!$scope.nodes) { $scope.nodes = []}
-            $scope.nodes[node._id-1] = node;
-        }
-        else if (payload.destinationName == "/zc/test_serial/current_inclusion_mode/"){
-            if(payload.payloadString == 'off'){
-                $scope.inclusionmode = false;
-            }else if(payload.payloadString == 'on'){
-                $scope.inclusionmode = true;
-            }
-        }
-        //Something changed, apply.
-        $scope.$apply();
-    };
-    
     $scope.node_info={};
     $scope.node_folded={};
     $scope.handle_node_info = function(node_id){
@@ -173,30 +156,15 @@ angular.module('app.controllers', [])
 /** ALARMS */
 .controller('alarmsCtrl', function($scope, Mqtt) {
     initmessage = new Paho.MQTT.Message("get");
-            initmessage.destinationName = "/zc/test_serial/get_alarms/";
-            Mqtt.send(initmessage); 
-    Mqtt.onMessageArrived = function(payload) {
-        if (payload.destinationName == "/zc/test_serial/alarm/" && payload.payloadString != "done") {
-            alarm = JSON.parse(payload.payloadString);
-            if (!$scope.alarms) { $scope.alarms = [] }
-            $scope.alarms[alarm._id-1] = alarm;
-        }
-        $scope.$apply();
-    };
+    initmessage.destinationName = "/zc/test_serial/get_alarms/";
+    Mqtt.send(initmessage); 
 })
 
+/** TIMERS */
 .controller('timersCtrl',function($scope,Mqtt){
     initmessage = new Paho.MQTT.Message("get");
-            initmessage.destinationName = "/zc/test_serial/get_timers/";
-            Mqtt.send(initmessage); 
-    Mqtt.onMessageArrived = function(payload) {
-        if (payload.destinationName == "/zc/test_serial/timer/" && payload.payloadString != "done") {
-            timer = JSON.parse(payload.payloadString);
-            if (!$scope.timers) { $scope.timers = [] }
-            $scope.timers[timer._id-1] = timer;
-        }
-        $scope.$apply();
-    };    
+    initmessage.destinationName = "/zc/test_serial/get_timers/";
+    Mqtt.send(initmessage);    
 })
 
 .controller('weatherCtrl', function($scope){

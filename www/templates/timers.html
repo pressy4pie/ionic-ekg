@@ -1,3 +1,26 @@
 <ion-view title="Timers" id="page4" class=" ">
-    <ion-content padding="true" class="has-header"></ion-content>
+   <ion-content padding="false" class="has-header" >
+      <ion-list>
+         <ion-item>
+            <div class="button-bar">
+               <button class="button button-dark">
+               Create new timer
+               </button>
+            </div>
+         </ion-item>
+         <ion-item ng-repeat="timer in timers">
+            <div class="card">
+               <div class="item item-button-right">
+                  <div class="bar bar-header bar-balanced">
+                     <h1 class="title">{{timer.name}}</h1>
+                     <button class="button button-dark icon ion-gear-a" >
+                     </button>
+                  </div>
+                  <span><br><br></span>
+                  some text.
+               </div>
+            </div>
+         </ion-item>
+      </ion-list>
+   </ion-content>
 </ion-view>
