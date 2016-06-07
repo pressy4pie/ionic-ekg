@@ -2,7 +2,9 @@ angular.module('app.services', [])
 .factory('Mqtt', function($rootScope) {
     $rootScope.serial_number = "test_serial";
     var random_string_id_thing = Math.floor(Math.random() * (1000 - 0 + 1)) + 1000;
-    var Mqtt_service = new Paho.MQTT.Client("ekg.westus.cloudapp.azure.com", 3002,random_string_id_thing.toString()  );
+    cloud_broker='ekg.westus.cloudapp.azure.com';
+    local_broker='localhost';
+    var Mqtt_service = new Paho.MQTT.Client(cloud_broker, 3002,random_string_id_thing.toString()  );
     var serial_number = $rootScope.serial_number;
     /** Options for the connection */
     var mqtt_options = {
