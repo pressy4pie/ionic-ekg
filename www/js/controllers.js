@@ -150,15 +150,15 @@ angular.module('app.controllers', [])
         var minutes = Math.floor(this_time / 60000);
         var seconds = ((this_time % 60000) / 1000).toFixed(0);
         
-        if( minutes > 10 ){
-            if( minutes < 60){
+        if( minutes > 2 ){ // If its been longer than two minutes.
+            if( minutes < 60){ // but less than an hour
                return minutes  + " minutes ago" ; 
             }
-            else if(minutes > 60){
+            else if(minutes > 60){ // and greater than an hour
                 return hours + " hours ago";
             }
         }
-        else if( minutes < 10 ){ // like two minutes i guess. 
+        else if( minutes < 2 ){ // like two minutes i guess. 
             return 'NOW';
         } 
         else {
