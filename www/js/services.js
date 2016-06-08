@@ -6,6 +6,7 @@ angular.module('app.services', [])
     local_broker='localhost';
     var Mqtt_service = new Paho.MQTT.Client(cloud_broker, 3002,random_string_id_thing.toString()  );
     var serial_number = $rootScope.serial_number;
+    
     /** Options for the connection */
     var mqtt_options = {
         timeout: 3,
@@ -27,6 +28,7 @@ angular.module('app.services', [])
         console.log('connection lost' + JSON.stringify(err));
     };
     
+    /** when we get a message, sort thru it.  */
     Mqtt_service.onMessageArrived = function(payload) {
         /** If it is a node message.  */
         if (payload.destinationName == "/zc/"+serial_number+"/node/" && payload.payloadString != "done") {
